@@ -2,6 +2,7 @@ package com.empresa.inventario.domain.model;
 
 import com.empresa.inventario.domain.enums.EstadoBien;
 import com.empresa.inventario.domain.enums.TipoMovimiento;
+import com.empresa.inventario.domain.exception.DomainException;
 
 public class Bien {
 
@@ -13,7 +14,7 @@ public class Bien {
     private Bien(String nombre, EstadoBien estado, int categoria) {
 
         if(nombre==null || nombre.isEmpty()){
-            throw new IllegalArgumentException("El nombre es obligatorio");
+            throw new DomainException("El nombre es obligatorio");
         }
 
         this.nombre = nombre;
@@ -24,7 +25,7 @@ public class Bien {
     private Bien(int id, String nombre, EstadoBien estado, int categoria) {
 
         if(nombre==null || nombre.isEmpty()){
-            throw new IllegalArgumentException("El nombre es obligatorio");
+            throw new DomainException("El nombre es obligatorio");
         }
         this.id = id;
         this.nombre = nombre;
@@ -42,7 +43,7 @@ public class Bien {
 
     public MovimientoBien darDeBaja(){
         if(estado == EstadoBien.BAJA){
-            throw new IllegalStateException("El bien ya está dado de baja");
+            throw new DomainException("El bien ya está dado de baja");
         }
         EstadoBien anterior = estado;
         estado = EstadoBien.BAJA;

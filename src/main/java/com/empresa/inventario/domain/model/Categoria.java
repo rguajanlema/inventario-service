@@ -1,6 +1,6 @@
 package com.empresa.inventario.domain.model;
 
-import com.empresa.inventario.domain.enums.TipoMovimiento;
+import com.empresa.inventario.domain.exception.DomainException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +13,7 @@ public class Categoria {
 
     private Categoria(int id, String nombre) {
         if(nombre==null || nombre.isEmpty()){
-            throw new IllegalArgumentException("El nombre es obligatorio");
+            throw new DomainException("El nombre es obligatorio");
         }
 
         this.id = id;
@@ -30,13 +30,13 @@ public class Categoria {
 
     public void actualizar(String nombre) {
         if(nombre==null || nombre.isEmpty()){
-            throw new IllegalArgumentException("El nombre es obligatorio");
+            throw new DomainException("El nombre es obligatorio");
         }
         this.nombre = nombre;
     }
     public void agregarBien(Bien bien) {
         if(bien==null){
-            throw new IllegalArgumentException("Bien no puede ser nulo");
+            throw new DomainException("Bien no puede ser nulo");
         }
         bienes.add(bien);
     }
