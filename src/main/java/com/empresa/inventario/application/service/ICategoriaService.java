@@ -20,5 +20,6 @@ public interface ICategoriaService {
     long cantidadBienesDisponibles(String id);
     long cantidadBienesDeBaja(String id);
     BienResponse crearBien(BienCrearCommand request);
+    void crearLoteBien(List<BienCrearCommand> request);
 
 }

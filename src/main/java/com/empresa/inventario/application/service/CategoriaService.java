@@ -14,7 +14,9 @@ import com.empresa.inventario.domain.model.Bien;
 import com.empresa.inventario.domain.model.Categoria;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -104,6 +106,28 @@ public class CategoriaService implements ICategoriaService {
                 result.getEstado(),
                 result.getCategoria()
         );
+    }
+
+    @Override
+    public void crearLoteBien(List<BienCrearCommand> request) {
+
+        Set<String> ids = request.stream()
+                .map(BienCrearCommand::categoriaId)
+                .collect(Collectors.toSet());
+
+
+        var categorias = categoriaRepository.findByIds(ids.stream().toList());
+
+        if (categorias.size() != ids.size()) {
+            throw new DomainException("Una o más categorías no existen");
+        }
+
+        List<Bien> bienes = request.stream().map(x->Bien.crear(x.nombre(),
+                x.descripcion(),
+                x.categoriaId(),
+                x.personaCrea())).toList();
+
+        bienRepository.save(bienes);
     }
 
 

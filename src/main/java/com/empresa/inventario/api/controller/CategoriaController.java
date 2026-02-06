@@ -67,5 +67,12 @@ public class CategoriaController {
     public ResponseEntity<BienResponse> crearBien(@RequestBody BienCrearCommand request) {
         return ResponseEntity.ok(categoriaService.crearBien(request));
     }
+    @PostMapping("/crear-lote-bienes")
+    public ResponseEntity<ApiResponse> crearBien(@RequestBody List<BienCrearCommand> request) {
+        categoriaService.crearLoteBien(request);
+        return ResponseEntity.ok(
+                new ApiResponse("Lote de bienes creado correctamente")
+        );
+    }
 
 }

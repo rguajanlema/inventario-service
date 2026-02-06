@@ -101,5 +101,16 @@ public class CategoriaRepositoryAdapter implements ICategoriaRepository {
         return jpaRepository.contarBienesPorEstado(categoriaId, EstadoBien.BAJA.toString());
     }
 
+    @Override
+    public List<Categoria> findByIds(List<String> ids) {
+        var result = jpaRepository.findAllById(ids);
+        return result.stream().map(x->Categoria.hidratar(
+                x.getId(),
+                x.getNombre(),
+                EstadoCategoria.valueOf(x.getEstado()),
+                x.getIdCreador()
+        )).toList();
+    }
+
 
 }
