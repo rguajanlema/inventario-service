@@ -72,5 +72,10 @@ public class CategoriaService implements ICategoriaService {
         return categoriaRepository.contarBienesDisponibles(id);
     }
 
+    @Override
+    public long cantidadBienesDeBaja(String id) {
+        return categoriaRepository.contarBienesDeBaja(id);
+    }
+
 
 }

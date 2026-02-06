@@ -59,5 +59,10 @@ public class CategoriaController {
         var response = categoriaService.cantidadBienesDisponibles(id);
         return ResponseEntity.ok(response);
     }
+    @GetMapping("/cantidad-bien-baja")
+    public ResponseEntity<Long> cantidadBienBaja(@RequestParam String id) {
+        var response = categoriaService.cantidadBienesDeBaja(id);
+        return ResponseEntity.ok(response);
+    }
 
 }

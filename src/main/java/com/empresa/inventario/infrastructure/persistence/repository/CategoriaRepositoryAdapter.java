@@ -96,5 +96,10 @@ public class CategoriaRepositoryAdapter implements ICategoriaRepository {
         return jpaRepository.contarBienesPorEstado(categoriaId, EstadoBien.ACTIVO.toString());
     }
 
+    @Override
+    public Long contarBienesDeBaja(String categoriaId) {
+        return jpaRepository.contarBienesPorEstado(categoriaId, EstadoBien.BAJA.toString());
+    }
+
 
 }
