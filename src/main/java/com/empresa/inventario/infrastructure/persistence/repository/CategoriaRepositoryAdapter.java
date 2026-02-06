@@ -1,7 +1,10 @@
 package com.empresa.inventario.infrastructure.persistence.repository;
 
+import com.empresa.inventario.application.dto.response.BienResponse;
 import com.empresa.inventario.application.dto.response.CategoriaCantidadBienesResponse;
+import com.empresa.inventario.application.dto.response.CategoriaConBienesResponse;
 import com.empresa.inventario.application.port.out.ICategoriaRepository;
+import com.empresa.inventario.domain.enums.EstadoBien;
 import com.empresa.inventario.domain.enums.EstadoCategoria;
 import com.empresa.inventario.domain.model.Categoria;
 import com.empresa.inventario.infrastructure.persistence.entity.CategoriaEntity;
@@ -56,7 +59,7 @@ public class CategoriaRepositoryAdapter implements ICategoriaRepository {
     }
 
     @Override
-    public List<CategoriaCantidadBienesResponse> bienesDisponibles() {
+    public List<CategoriaCantidadBienesResponse> findDisponibles() {
 
         return jpaRepository.obtenerCantidadBienesPorCategoria()
                 .stream()
@@ -67,6 +70,25 @@ public class CategoriaRepositoryAdapter implements ICategoriaRepository {
                 ))
                 .toList();
 
+    }
+
+    @Override
+    public List<CategoriaConBienesResponse> findAllWithBienes() {
+        return jpaRepository.findAllWithBienes()
+                .stream()
+                .map(c -> new CategoriaConBienesResponse(
+                        c.getId(),
+                        c.getNombre(),
+                        c.getBienes().stream()
+                                .map(b -> new BienResponse(
+                                        b.getId(),
+                                        b.getNombre(),
+                                        EstadoBien.valueOf(b.getEstado()),
+                                        b.getDescripcion()
+                                ))
+                                .toList()
+                ))
+                .toList();
     }
 
 

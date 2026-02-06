@@ -3,6 +3,7 @@ package com.empresa.inventario.application.service;
 import com.empresa.inventario.application.dto.request.CategoriaActualizarCommand;
 import com.empresa.inventario.application.dto.request.CategoriaCrearCommand;
 import com.empresa.inventario.application.dto.response.CategoriaCantidadBienesResponse;
+import com.empresa.inventario.application.dto.response.CategoriaConBienesResponse;
 import com.empresa.inventario.application.dto.response.CategoriaResponse;
 
 
@@ -13,5 +14,6 @@ public interface ICategoriaService {
     void actualizarCategoria(CategoriaActualizarCommand request);
     List<CategoriaResponse> listar();
     List<CategoriaCantidadBienesResponse> ObtenerDisponibilidadPorCategoria();
+    List<CategoriaConBienesResponse> findAllWithBienes();
 
 }

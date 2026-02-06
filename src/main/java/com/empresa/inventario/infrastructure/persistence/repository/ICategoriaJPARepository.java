@@ -21,5 +21,12 @@ public interface ICategoriaJPARepository extends JpaRepository<CategoriaEntity, 
     List<CategoriaCantidadBienesView> obtenerCantidadBienesPorCategoria();
 
 
+    @Query("""
+    SELECT DISTINCT c
+    FROM CategoriaEntity c
+    LEFT JOIN FETCH c.bienes
+""")
+    List<CategoriaEntity> findAllWithBienes();
+
 
 }

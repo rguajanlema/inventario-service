@@ -4,6 +4,7 @@ import com.empresa.inventario.application.dto.request.CategoriaActualizarCommand
 import com.empresa.inventario.application.dto.request.CategoriaCrearCommand;
 import com.empresa.inventario.application.dto.response.ApiResponse;
 import com.empresa.inventario.application.dto.response.CategoriaCantidadBienesResponse;
+import com.empresa.inventario.application.dto.response.CategoriaConBienesResponse;
 import com.empresa.inventario.application.dto.response.CategoriaResponse;
 import com.empresa.inventario.application.service.ICategoriaService;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ public class CategoriaController {
     public ResponseEntity<CategoriaResponse> crear(@RequestBody CategoriaCrearCommand command) {
         return ResponseEntity.ok(categoriaService.crearCategoria(command));
     }
+
     @PutMapping("/actualizar")
     public ResponseEntity<ApiResponse> actualizar(@RequestBody CategoriaActualizarCommand command) {
         categoriaService.actualizarCategoria(command);
@@ -38,9 +40,16 @@ public class CategoriaController {
         var response = categoriaService.listar();
         return ResponseEntity.ok(response);
     }
+
     @GetMapping("/bien-disponibles-categoria")
     public ResponseEntity<List<CategoriaCantidadBienesResponse>> obtenerBienDisponiblesCategoria() {
         var response = categoriaService.ObtenerDisponibilidadPorCategoria();
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/categoria-existentes-bien")
+    public ResponseEntity<List<CategoriaConBienesResponse>> obtenerCategoriaExistentesBien() {
+        var response = categoriaService.findAllWithBienes();
         return ResponseEntity.ok(response);
     }
 }
