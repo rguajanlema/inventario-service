@@ -35,7 +35,16 @@ public class BienEntity {
 
     public BienEntity() {}
 
-    public BienEntity(int id, String nombre, String descripcion, String estado, LocalDate fechaRegistra, LocalTime horaRegistra, String idCreador, CategoriaEntity categoria) {
+    public BienEntity(
+            int id,
+            String nombre,
+            String descripcion,
+            String estado,
+            LocalDate fechaRegistra,
+            LocalTime horaRegistra,
+            String idCreador,
+            CategoriaEntity categoria
+    ) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;

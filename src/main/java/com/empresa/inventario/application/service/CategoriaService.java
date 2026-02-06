@@ -1,12 +1,16 @@
 package com.empresa.inventario.application.service;
 
+import com.empresa.inventario.application.dto.request.BienCrearCommand;
 import com.empresa.inventario.application.dto.request.CategoriaActualizarCommand;
 import com.empresa.inventario.application.dto.request.CategoriaCrearCommand;
+import com.empresa.inventario.application.dto.response.BienResponse;
 import com.empresa.inventario.application.dto.response.CategoriaCantidadBienesResponse;
 import com.empresa.inventario.application.dto.response.CategoriaConBienesResponse;
 import com.empresa.inventario.application.dto.response.CategoriaResponse;
+import com.empresa.inventario.application.port.out.IBienRepository;
 import com.empresa.inventario.application.port.out.ICategoriaRepository;
 import com.empresa.inventario.domain.exception.DomainException;
+import com.empresa.inventario.domain.model.Bien;
 import com.empresa.inventario.domain.model.Categoria;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +21,11 @@ import java.util.stream.Collectors;
 public class CategoriaService implements ICategoriaService {
 
     private final ICategoriaRepository categoriaRepository;
+    private final IBienRepository bienRepository;
 
-    public CategoriaService(ICategoriaRepository categoriaRepository) {
+    public CategoriaService(ICategoriaRepository categoriaRepository, IBienRepository bienRepository) {
         this.categoriaRepository = categoriaRepository;
+        this.bienRepository = bienRepository;
     }
 
     @Override
@@ -75,6 +81,29 @@ public class CategoriaService implements ICategoriaService {
     @Override
     public long cantidadBienesDeBaja(String id) {
         return categoriaRepository.contarBienesDeBaja(id);
+    }
+
+    @Override
+    public BienResponse crearBien(BienCrearCommand request) {
+
+        categoriaRepository.findById(request.categoriaId())
+                .orElseThrow(() -> new DomainException("La categoría no existe"));
+
+        Bien bien = Bien.crear(
+                request.nombre(),
+                request.descripcion(),
+                request.categoriaId(),
+                request.personaCrea()
+        );
+
+        Bien result = bienRepository.save(bien);
+
+        return new BienResponse(
+                result.getId(),
+                result.getNombre(),
+                result.getEstado(),
+                result.getCategoria()
+        );
     }
 
 

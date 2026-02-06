@@ -1,11 +1,9 @@
 package com.empresa.inventario.api.controller;
 
+import com.empresa.inventario.application.dto.request.BienCrearCommand;
 import com.empresa.inventario.application.dto.request.CategoriaActualizarCommand;
 import com.empresa.inventario.application.dto.request.CategoriaCrearCommand;
-import com.empresa.inventario.application.dto.response.ApiResponse;
-import com.empresa.inventario.application.dto.response.CategoriaCantidadBienesResponse;
-import com.empresa.inventario.application.dto.response.CategoriaConBienesResponse;
-import com.empresa.inventario.application.dto.response.CategoriaResponse;
+import com.empresa.inventario.application.dto.response.*;
 import com.empresa.inventario.application.service.ICategoriaService;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
@@ -63,6 +61,11 @@ public class CategoriaController {
     public ResponseEntity<Long> cantidadBienBaja(@RequestParam String id) {
         var response = categoriaService.cantidadBienesDeBaja(id);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/crear-bien")
+    public ResponseEntity<BienResponse> crearBien(@RequestBody BienCrearCommand request) {
+        return ResponseEntity.ok(categoriaService.crearBien(request));
     }
 
 }

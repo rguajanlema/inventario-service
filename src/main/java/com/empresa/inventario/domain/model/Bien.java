@@ -9,9 +9,11 @@ public class Bien {
     private int id;
     private String nombre;
     private EstadoBien estado;
+    private String descripcion;
     private String categoria;
+    private String personaCrea;
 
-    private Bien(String nombre, EstadoBien estado, String categoria) {
+    private Bien(String nombre, EstadoBien estado, String descripcion ,String categoria, String personaCrea) {
 
         if(nombre==null || nombre.isEmpty()){
             throw new DomainException("El nombre es obligatorio");
@@ -20,9 +22,11 @@ public class Bien {
         this.nombre = nombre;
         this.estado = estado;
         this.categoria = categoria;
+        this.descripcion = descripcion;
+        this.personaCrea = personaCrea;
     }
 
-    private Bien(int id, String nombre, EstadoBien estado, String categoria) {
+    private Bien(int id, String nombre, String descripcion, EstadoBien estado, String categoria, String personaCrea) {
 
         if(nombre==null || nombre.isEmpty()){
             throw new DomainException("El nombre es obligatorio");
@@ -31,14 +35,16 @@ public class Bien {
         this.nombre = nombre;
         this.estado = estado;
         this.categoria = categoria;
+        this.descripcion = descripcion;
+        this.personaCrea = personaCrea;
     }
 
-    public static Bien crear(String nombre, String categoria){
-        return new Bien(nombre, EstadoBien.ACTIVO, categoria);
+    public static Bien crear(String nombre, String descripcion ,String categoria, String personaCrea) {
+        return new Bien(nombre,  EstadoBien.ACTIVO, descripcion,categoria,personaCrea);
     }
 
-    public static Bien hidratar(int id, String nombre, EstadoBien estado, String categoria){
-        return new Bien(id, nombre, estado, categoria);
+    public static Bien hidratar(int id, String nombre, String descripcion, EstadoBien estado, String categoria, String personaCrea) {
+        return new Bien(id, nombre, descripcion, estado, categoria,personaCrea);
     }
 
     public MovimientoBien darDeBaja(){
@@ -70,5 +76,13 @@ public class Bien {
 
     public String getCategoria() {
         return categoria;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public String getPersonaCrea() {
+        return personaCrea;
     }
 }

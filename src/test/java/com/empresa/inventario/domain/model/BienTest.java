@@ -14,7 +14,7 @@ class BienTest {
     // ============================
     @Test
     void crearBien_nombreValido_funciona() {
-        Bien bien = Bien.crear("Televisor", 1);
+        Bien bien = Bien.crear("Televisor", "27 pg","C-0001","ADMIN");
 
         assertEquals("Televisor", bien.getNombre());
         assertEquals(EstadoBien.ACTIVO, bien.getEstado());
@@ -24,14 +24,14 @@ class BienTest {
     @Test
     void crearBien_nombreVacio_lanzaExcepcion() {
         assertThrows(IllegalArgumentException.class, () -> {
-            Bien.crear("", 1);
+            Bien.crear("", "27 pg","C-0001","ADMIN");
         });
     }
 
     @Test
     void crearBien_nombreNulo_lanzaExcepcion() {
         assertThrows(IllegalArgumentException.class, () -> {
-            Bien.crear(null, 1);
+            Bien.crear(null, "27 pg","C-0001","ADMIN");
         });
     }
 
@@ -40,7 +40,7 @@ class BienTest {
     // ============================
     @Test
     void hidratarBien_nombreValido_funciona() {
-        Bien bien = Bien.hidratar(10, "Laptop", EstadoBien.ACTIVO, 2);
+        Bien bien = Bien.hidratar(10, "Laptop", "27 pg", EstadoBien.ACTIVO, "C-0001","ADMIN");
 
         assertEquals(10, bien.getId());
         assertEquals("Laptop", bien.getNombre());
@@ -51,14 +51,14 @@ class BienTest {
     @Test
     void hidratarBien_nombreVacio_lanzaExcepcion() {
         assertThrows(IllegalArgumentException.class, () -> {
-            Bien.hidratar(10, "", EstadoBien.ACTIVO, 2);
+            Bien.hidratar(10, "", "27 pg", EstadoBien.ACTIVO, "C-0001","ADMIN");
         });
     }
 
     @Test
     void hidratarBien_nombreNulo_lanzaExcepcion() {
         assertThrows(IllegalArgumentException.class, () -> {
-            Bien.hidratar(10, null, EstadoBien.ACTIVO, 2);
+            Bien.hidratar(10, null, "27 pg", EstadoBien.ACTIVO, "C-0001","ADMIN");
         });
     }
 
@@ -67,7 +67,7 @@ class BienTest {
     // ============================
     @Test
     void darDeBaja_bienActivo_funciona() {
-        Bien bien = Bien.crear("Televisor", 1);
+        Bien bien = Bien.crear("Televisor", "1","C-0001","ADMIN");
         bien.darDeBaja();
 
         assertEquals(EstadoBien.BAJA, bien.getEstado());
@@ -75,7 +75,7 @@ class BienTest {
 
     @Test
     void darDeBaja_bienYaBaja_lanzaExcepcion() {
-        Bien bien = Bien.crear("Televisor", 1);
+        Bien bien = Bien.crear("Televisor", "1","C-0001","ADMIN");
         bien.darDeBaja();
 
         assertThrows(IllegalStateException.class, () -> {

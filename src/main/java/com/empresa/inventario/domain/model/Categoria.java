@@ -46,11 +46,12 @@ public class Categoria {
         this.nombre = nombre;
     }
 
-    public void agregarBien(Bien bien) {
+    public Bien agregarBien(Bien bien) {
         if(bien==null){
             throw new DomainException("Bien no puede ser nulo");
         }
         bienes.add(bien);
+        return bien;
     }
 
     public List<Bien> getBienes() {

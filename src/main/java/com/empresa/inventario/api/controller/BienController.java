@@ -18,11 +18,6 @@ public class BienController {
         this.bienService = bienService;
     }
 
-//    @PostMapping("/crear")
-//    public ResponseEntity<BienResponse> crear(@RequestBody BienCrearCommand command) {
-//        return ResponseEntity.ok(bienService.crear(command));
-//    }
-
     @GetMapping("/listado")
     public ResponseEntity<List<BienResponse>> obtenerTodo() {
         var response = bienService.listar();

@@ -64,6 +64,9 @@ public class CategoriaEntity {
     }
 
     public CategoriaEntity(){}
+    public CategoriaEntity(String categoriaId){
+        this.id = categoriaId;
+    }
 
     public CategoriaEntity(String id, String nombre, String estado, LocalDate fechaRegistra, LocalTime horaRegistra, String idCreador) {
         this.id = id;
