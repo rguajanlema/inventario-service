@@ -3,6 +3,7 @@ package com.empresa.inventario.api.controller;
 import com.empresa.inventario.application.dto.request.CategoriaActualizarCommand;
 import com.empresa.inventario.application.dto.request.CategoriaCrearCommand;
 import com.empresa.inventario.application.dto.response.ApiResponse;
+import com.empresa.inventario.application.dto.response.CategoriaCantidadBienesResponse;
 import com.empresa.inventario.application.dto.response.CategoriaResponse;
 import com.empresa.inventario.application.service.ICategoriaService;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +36,11 @@ public class CategoriaController {
     @GetMapping("/listado")
     public ResponseEntity<List<CategoriaResponse>> obtenerTodo() {
         var response = categoriaService.listar();
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/bien-disponibles-categoria")
+    public ResponseEntity<List<CategoriaCantidadBienesResponse>> obtenerBienDisponiblesCategoria() {
+        var response = categoriaService.ObtenerDisponibilidadPorCategoria();
         return ResponseEntity.ok(response);
     }
 }

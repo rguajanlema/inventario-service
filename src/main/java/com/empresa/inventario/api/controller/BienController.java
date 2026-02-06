@@ -1,5 +1,6 @@
 package com.empresa.inventario.api.controller;
 
+import com.empresa.inventario.application.dto.request.BienCrearCommand;
 import com.empresa.inventario.application.dto.response.BienResponse;
 import com.empresa.inventario.application.service.IBienService;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,10 @@ public class BienController {
         this.bienService = bienService;
     }
 
+//    @PostMapping("/crear")
+//    public ResponseEntity<BienResponse> crear(@RequestBody BienCrearCommand command) {
+//        return ResponseEntity.ok(bienService.crear(command));
+//    }
 
     @GetMapping("/listado")
     public ResponseEntity<List<BienResponse>> obtenerTodo() {

@@ -2,6 +2,7 @@ package com.empresa.inventario.application.service;
 
 import com.empresa.inventario.application.dto.request.CategoriaActualizarCommand;
 import com.empresa.inventario.application.dto.request.CategoriaCrearCommand;
+import com.empresa.inventario.application.dto.response.CategoriaCantidadBienesResponse;
 import com.empresa.inventario.application.dto.response.CategoriaResponse;
 import com.empresa.inventario.application.port.out.ICategoriaRepository;
 import com.empresa.inventario.domain.exception.DomainException;
@@ -52,6 +53,12 @@ public class CategoriaService implements ICategoriaService {
                 .stream()
                 .map(x->new CategoriaResponse(x.getId().value(),x.getNombre(),x.getEstado()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CategoriaCantidadBienesResponse> ObtenerDisponibilidadPorCategoria() {
+        var result = categoriaRepository.bienesDisponibles();
+        return result;
     }
 
 

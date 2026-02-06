@@ -1,8 +1,7 @@
 package com.empresa.inventario.application.service;
 
-import com.empresa.inventario.application.dto.request.BienCrearCommand;
 import com.empresa.inventario.application.dto.response.BienResponse;
-import com.empresa.inventario.domain.model.Bien;
+import com.empresa.inventario.application.port.out.IBienRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,16 +9,33 @@ import java.util.List;
 @Service
 public class BienService implements IBienService {
 
-
-
-    @Override
-    public void Crear(BienCrearCommand request) {
-        Bien.crear(request.nombre(), request.categoriaId());
-
+    private final IBienRepository bienRepository;
+    public BienService(IBienRepository bienRepository) {
+        this.bienRepository = bienRepository;
     }
+
 
     @Override
     public List<BienResponse> listar() {
-        return List.of();
+        var result = bienRepository.findAll();
+
+        return result.stream().map(x->new BienResponse(
+                x.getId(),
+                x.getNombre(),
+                x.getEstado(),
+                x.getCategoria()
+        )).toList();
+    }
+
+    @Override
+    public List<BienResponse> listarDisponibles() {
+        var result = bienRepository.findAll();
+
+        return result.stream().map(x->new BienResponse(
+                x.getId(),
+                x.getNombre(),
+                x.getEstado(),
+                x.getCategoria()
+        )).toList();
     }
 }

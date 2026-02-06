@@ -9,9 +9,9 @@ public class Bien {
     private int id;
     private String nombre;
     private EstadoBien estado;
-    private int categoria;
+    private String categoria;
 
-    private Bien(String nombre, EstadoBien estado, int categoria) {
+    private Bien(String nombre, EstadoBien estado, String categoria) {
 
         if(nombre==null || nombre.isEmpty()){
             throw new DomainException("El nombre es obligatorio");
@@ -22,7 +22,7 @@ public class Bien {
         this.categoria = categoria;
     }
 
-    private Bien(int id, String nombre, EstadoBien estado, int categoria) {
+    private Bien(int id, String nombre, EstadoBien estado, String categoria) {
 
         if(nombre==null || nombre.isEmpty()){
             throw new DomainException("El nombre es obligatorio");
@@ -33,11 +33,11 @@ public class Bien {
         this.categoria = categoria;
     }
 
-    public static Bien crear(String nombre, int categoria){
+    public static Bien crear(String nombre, String categoria){
         return new Bien(nombre, EstadoBien.ACTIVO, categoria);
     }
 
-    public static Bien hidratar(int id, String nombre, EstadoBien estado, int categoria){
+    public static Bien hidratar(int id, String nombre, EstadoBien estado, String categoria){
         return new Bien(id, nombre, estado, categoria);
     }
 
@@ -68,7 +68,7 @@ public class Bien {
         return estado;
     }
 
-    public int getCategoria() {
+    public String getCategoria() {
         return categoria;
     }
 }

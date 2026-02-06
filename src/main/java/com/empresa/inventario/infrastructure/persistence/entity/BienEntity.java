@@ -29,8 +29,52 @@ public class BienEntity {
     @Column(name = "idCreador", nullable = false, length = 10)
     private String idCreador;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idCategoria", nullable = false)
     private CategoriaEntity categoria;
+
+    public BienEntity() {}
+
+    public BienEntity(int id, String nombre, String descripcion, String estado, LocalDate fechaRegistra, LocalTime horaRegistra, String idCreador, CategoriaEntity categoria) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.estado = estado;
+        this.fechaRegistra = fechaRegistra;
+        this.horaRegistra = horaRegistra;
+        this.idCreador = idCreador;
+        this.categoria = categoria;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public LocalDate getFechaRegistra() {
+        return fechaRegistra;
+    }
+
+    public LocalTime getHoraRegistra() {
+        return horaRegistra;
+    }
+
+    public String getIdCreador() {
+        return idCreador;
+    }
+
+    public CategoriaEntity getCategoria() {
+        return categoria;
+    }
 }
