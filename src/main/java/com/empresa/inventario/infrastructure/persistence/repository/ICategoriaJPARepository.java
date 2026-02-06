@@ -4,6 +4,7 @@ import com.empresa.inventario.application.dto.response.CategoriaCantidadBienesVi
 import com.empresa.inventario.infrastructure.persistence.entity.CategoriaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -27,6 +28,16 @@ public interface ICategoriaJPARepository extends JpaRepository<CategoriaEntity, 
     LEFT JOIN FETCH c.bienes
 """)
     List<CategoriaEntity> findAllWithBienes();
+
+    @Query("""
+    SELECT COUNT(b)
+    FROM CategoriaEntity c
+    LEFT JOIN c.bienes b
+    WHERE c.id = :id
+    AND b.estado = :estado
+    """)
+    Long contarBienesPorEstado(@Param("id") String id, @Param("estado")  String estado);
+
 
 
 }

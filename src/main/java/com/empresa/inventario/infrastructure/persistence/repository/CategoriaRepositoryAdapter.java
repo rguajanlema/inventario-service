@@ -91,5 +91,10 @@ public class CategoriaRepositoryAdapter implements ICategoriaRepository {
                 .toList();
     }
 
+    @Override
+    public Long contarBienesDisponibles(String categoriaId) {
+        return jpaRepository.contarBienesPorEstado(categoriaId, EstadoBien.ACTIVO.toString());
+    }
+
 
 }

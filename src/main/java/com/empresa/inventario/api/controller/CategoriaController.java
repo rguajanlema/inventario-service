@@ -7,6 +7,7 @@ import com.empresa.inventario.application.dto.response.CategoriaCantidadBienesRe
 import com.empresa.inventario.application.dto.response.CategoriaConBienesResponse;
 import com.empresa.inventario.application.dto.response.CategoriaResponse;
 import com.empresa.inventario.application.service.ICategoriaService;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,4 +53,11 @@ public class CategoriaController {
         var response = categoriaService.findAllWithBienes();
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/cantidad-bien-disponible")
+    public ResponseEntity<Long> cantidadBienDisponible(@RequestParam String id) {
+        var response = categoriaService.cantidadBienesDisponibles(id);
+        return ResponseEntity.ok(response);
+    }
+
 }

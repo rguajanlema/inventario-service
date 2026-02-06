@@ -67,5 +67,10 @@ public class CategoriaService implements ICategoriaService {
         return categoriaRepository.findAllWithBienes();
     }
 
+    @Override
+    public long cantidadBienesDisponibles(String id) {
+        return categoriaRepository.contarBienesDisponibles(id);
+    }
+
 
 }

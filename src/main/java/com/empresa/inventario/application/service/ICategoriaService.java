@@ -15,5 +15,6 @@ public interface ICategoriaService {
     List<CategoriaResponse> listar();
     List<CategoriaCantidadBienesResponse> ObtenerDisponibilidadPorCategoria();
     List<CategoriaConBienesResponse> findAllWithBienes();
+    long cantidadBienesDisponibles(String id);
 
 }
