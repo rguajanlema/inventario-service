@@ -1,5 +1,6 @@
 package com.empresa.inventario.domain.model;
 
+import com.empresa.inventario.domain.enums.EstadoCategoria;
 import com.empresa.inventario.domain.exception.DomainException;
 
 import java.util.ArrayList;
@@ -7,25 +8,27 @@ import java.util.Collections;
 import java.util.List;
 
 public class Categoria {
-    private final int id;
+    private final String id;
     private String nombre;
+    private EstadoCategoria estado;
     private final List<Bien> bienes = new ArrayList<>();
 
-    private Categoria(int id, String nombre) {
+    private Categoria(String id, String nombre, EstadoCategoria estado) {
         if(nombre==null || nombre.isEmpty()){
             throw new DomainException("El nombre es obligatorio");
         }
 
         this.id = id;
         this.nombre = nombre;
+        this.estado = estado;
     }
 
-    public static Categoria crear(int id, String nombre) {
-        return new Categoria(id, nombre);
+    public static Categoria crear(String id, String nombre) {
+        return new Categoria(id, nombre,EstadoCategoria.ACTIVO);
     }
 
-    public static Categoria hidratar(int id, String nombre) {
-        return new Categoria(id, nombre);
+    public static Categoria hidratar(String id, String nombre, EstadoCategoria estado) {
+        return new Categoria(id, nombre, estado);
     }
 
     public void actualizar(String nombre) {
@@ -68,7 +71,11 @@ public class Categoria {
         return nombre;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
+    }
+
+    public EstadoCategoria getEstado() {
+        return estado;
     }
 }

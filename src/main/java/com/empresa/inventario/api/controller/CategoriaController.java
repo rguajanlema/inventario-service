@@ -1,13 +1,14 @@
 package com.empresa.inventario.api.controller;
 
 import com.empresa.inventario.application.dto.request.CategoriaCrearCommand;
+import com.empresa.inventario.application.dto.response.CategoriaResponse;
 import com.empresa.inventario.application.service.ICategoriaService;
+import com.empresa.inventario.infrastructure.persistence.entity.CategoriaEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/categorias")
@@ -20,8 +21,13 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> crear(@RequestBody CategoriaCrearCommand command) {
-        categoriaService.crearCategoria(command);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<CategoriaResponse> crear(@RequestBody CategoriaCrearCommand command) {
+        return ResponseEntity.ok(categoriaService.crearCategoria(command));
+    }
+
+    @GetMapping("/listado")
+    public ResponseEntity<List<CategoriaResponse>> obtenerTodo() {
+        var response = categoriaService.listar();
+        return ResponseEntity.ok(response);
     }
 }

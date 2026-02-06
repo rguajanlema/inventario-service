@@ -15,23 +15,23 @@ class CategoriaTest {
     // ============================
     @Test
     void crearCategoria_nombreValido_funciona() {
-        Categoria cat = Categoria.crear(1, "Electrónica");
+        Categoria cat = Categoria.crear("C-001", "Electrónica");
 
-        assertEquals(1, cat.getId());
+        assertEquals("C-001", cat.getId());
         assertEquals("Electrónica", cat.getNombre());
     }
 
     @Test
     void crearCategoria_nombreVacio_lanzaExcepcion() {
         assertThrows(IllegalArgumentException.class, () -> {
-            Categoria.crear(1, "");
+            Categoria.crear("C-001", "");
         });
     }
 
     @Test
     void crearCategoria_nombreNulo_lanzaExcepcion() {
         assertThrows(IllegalArgumentException.class, () -> {
-            Categoria.crear(1, null);
+            Categoria.crear("C-001", null);
         });
     }
 
@@ -40,23 +40,23 @@ class CategoriaTest {
     // ============================
     @Test
     void hidratarCategoria_nombreValido_funciona() {
-        Categoria cat = Categoria.hidratar(2, "Hogar");
+        Categoria cat = Categoria.hidratar("C-002", "Hogar");
 
-        assertEquals(2, cat.getId());
+        assertEquals("C-002", cat.getId());
         assertEquals("Hogar", cat.getNombre());
     }
 
     @Test
     void hidratarCategoria_nombreVacio_lanzaExcepcion() {
         assertThrows(IllegalArgumentException.class, () -> {
-            Categoria.hidratar(2, "");
+            Categoria.hidratar("C-002", "");
         });
     }
 
     @Test
     void hidratarCategoria_nombreNulo_lanzaExcepcion() {
         assertThrows(IllegalArgumentException.class, () -> {
-            Categoria.hidratar(2, null);
+            Categoria.hidratar("C-002", null);
         });
     }
 
@@ -65,7 +65,7 @@ class CategoriaTest {
     // ============================
     @Test
     void actualizarCategoria_nombreValido_funciona() {
-        Categoria cat = Categoria.crear(1, "Electrónica");
+        Categoria cat = Categoria.crear("C-001", "Electrónica");
         cat.actualizar("Hogar");
 
         assertEquals("Hogar", cat.getNombre());
@@ -73,7 +73,7 @@ class CategoriaTest {
 
     @Test
     void actualizarCategoria_nombreVacio_lanzaExcepcion() {
-        Categoria cat = Categoria.crear(1, "Electrónica");
+        Categoria cat = Categoria.crear("C-001", "Electrónica");
 
         assertThrows(IllegalArgumentException.class, () -> {
             cat.actualizar("");
@@ -82,7 +82,7 @@ class CategoriaTest {
 
     @Test
     void actualizarCategoria_nombreNulo_lanzaExcepcion() {
-        Categoria cat = Categoria.crear(1, "Electrónica");
+        Categoria cat = Categoria.crear("C-001", "Electrónica");
 
         assertThrows(IllegalArgumentException.class, () -> {
             cat.actualizar(null);
@@ -94,17 +94,17 @@ class CategoriaTest {
     // ============================
     @Test
     void agregar_bienNulo_lanzaExcepcion() {
-        Categoria cat = Categoria.crear(1, "Electrónica");
+        Categoria cat = Categoria.crear("C-001", "Electrónica");
         assertThrows(IllegalArgumentException.class, () -> {
             cat.agregarBien(null);
         });
     }
     @Test
     void agregar_bienNoNulo_NolanzaExcepcion() {
-        Categoria cat = Categoria.crear(1, "Electrónica");
+        Categoria cat = Categoria.crear("C-001", "Electrónica");
         cat.agregarBien(Bien.crear("Televisor", cat.getId()));
 
-        assertEquals(1, cat.getBienes().size());
+        assertEquals("C-001", cat.getBienes().size());
 
         cat.agregarBien(Bien.crear("Laptop", cat.getId()));
 
@@ -116,7 +116,7 @@ class CategoriaTest {
     // ============================
     @Test
     void darDeBajaLote_todosBienesCambianAEstadoBaja() {
-        Categoria cat = Categoria.crear(1, "Electrónica");
+        Categoria cat = Categoria.crear("C-001", "Electrónica");
 
         Bien tv = Bien.crear("Televisor", cat.getId());
         Bien laptop = Bien.crear("Laptop", cat.getId());
