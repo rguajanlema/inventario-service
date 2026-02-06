@@ -20,8 +20,14 @@ public class CategoriaRepositoryAdapter implements ICategoriaRepository {
     }
 
     @Override
-    public Optional<Categoria> findById(Long id) {
-        return Optional.empty();
+    public Optional<Categoria> findById(String id) {
+        return jpaRepository.findById(id)
+                .map(result -> Categoria.hidratar(
+                        result.getId(),
+                        result.getNombre(),
+                        EstadoCategoria.valueOf(result.getEstado()),
+                        result.getIdCreador()
+                ));
     }
 
     @Override
@@ -34,23 +40,23 @@ public class CategoriaRepositoryAdapter implements ICategoriaRepository {
         var result = jpaRepository.findAll();
 
         return result.stream()
-                .map(x->Categoria.hidratar(x.getId(), x.getNombre(), EstadoCategoria.valueOf(x.getEstado())))
+                .map(x->Categoria.hidratar(x.getId(), x.getNombre(), EstadoCategoria.valueOf(x.getEstado()), x.getIdCreador()))
                 .toList();
     }
 
     @Override
     public Categoria save(Categoria categoria) {
         var entity = new CategoriaEntity(
-                categoria.getId(),
+                categoria.getId().value(),
                 categoria.getNombre(),
                 categoria.getEstado().toString(),
                 LocalDate.now(),
                 LocalTime.now(),
-                "ADMIN"
+                categoria.getCreadoPor()
         );
 
         var result = jpaRepository.save(entity);
-        return Categoria.hidratar(result.getId(), result.getNombre(), EstadoCategoria.valueOf(result.getEstado()));
+        return Categoria.hidratar(result.getId(), result.getNombre(), EstadoCategoria.valueOf(result.getEstado()), result.getIdCreador());
     }
 
 

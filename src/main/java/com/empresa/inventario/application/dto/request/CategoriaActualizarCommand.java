@@ -1,4 +1,4 @@
 package com.empresa.inventario.application.dto.request;
 
-public record CategoriaActualizarCommand(int id, String nombre) {
+public record CategoriaActualizarCommand(String codigo, String nombre,  String creadoPor) {
 }

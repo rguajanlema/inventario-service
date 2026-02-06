@@ -7,6 +7,6 @@ import com.empresa.inventario.application.dto.response.BienResponse;
 import java.util.List;
 
 public interface IBienService {
-    void Crear(BienCrearCommand request);
+    void crear(BienCrearCommand request);
     List<BienResponse> listar();
 }

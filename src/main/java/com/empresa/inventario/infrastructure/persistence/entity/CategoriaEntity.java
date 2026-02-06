@@ -1,14 +1,15 @@
 package com.empresa.inventario.infrastructure.persistence.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "categorias")
-
 public class CategoriaEntity {
 
     @Id
@@ -29,6 +30,10 @@ public class CategoriaEntity {
 
     @Column(name = "idCreador", nullable = false, length = 10)
     private String idCreador;
+
+    // 🔹 Relación uno a muchos con bienes
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BienEntity> bienes = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -53,6 +58,11 @@ public class CategoriaEntity {
     public String getIdCreador() {
         return idCreador;
     }
+
+    public List<BienEntity> getBienes() {
+        return bienes;
+    }
+
     public CategoriaEntity(){}
 
     public CategoriaEntity(String id, String nombre, String estado, LocalDate fechaRegistra, LocalTime horaRegistra, String idCreador) {
@@ -63,4 +73,5 @@ public class CategoriaEntity {
         this.horaRegistra = horaRegistra;
         this.idCreador = idCreador;
     }
+
 }

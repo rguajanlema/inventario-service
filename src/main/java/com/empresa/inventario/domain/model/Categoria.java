@@ -2,33 +2,41 @@ package com.empresa.inventario.domain.model;
 
 import com.empresa.inventario.domain.enums.EstadoCategoria;
 import com.empresa.inventario.domain.exception.DomainException;
+import com.empresa.inventario.domain.objetosDeValor.CodigoCategoria;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Categoria {
-    private final String id;
+    private final CodigoCategoria id;
     private String nombre;
     private EstadoCategoria estado;
+    private String creadoPor;
+
+
     private final List<Bien> bienes = new ArrayList<>();
 
-    private Categoria(String id, String nombre, EstadoCategoria estado) {
+    private Categoria(CodigoCategoria id, String nombre, EstadoCategoria estado, String creadoPor) {
         if(nombre==null || nombre.isEmpty()){
             throw new DomainException("El nombre es obligatorio");
+        }
+        if(creadoPor==null || creadoPor.isEmpty()){
+            throw new DomainException("El credoPor es obligatorio");
         }
 
         this.id = id;
         this.nombre = nombre;
         this.estado = estado;
+        this.creadoPor = creadoPor;
     }
 
-    public static Categoria crear(String id, String nombre) {
-        return new Categoria(id, nombre,EstadoCategoria.ACTIVO);
+    public static Categoria crear(String id, String nombre, String creadoPor) {
+        return new Categoria(CodigoCategoria.of(id), nombre,EstadoCategoria.ACTIVO,creadoPor);
     }
 
-    public static Categoria hidratar(String id, String nombre, EstadoCategoria estado) {
-        return new Categoria(id, nombre, estado);
+    public static Categoria hidratar(String id, String nombre, EstadoCategoria estado, String creadoPor) {
+        return new Categoria(CodigoCategoria.of(id), nombre, estado,creadoPor);
     }
 
     public void actualizar(String nombre) {
@@ -37,6 +45,7 @@ public class Categoria {
         }
         this.nombre = nombre;
     }
+
     public void agregarBien(Bien bien) {
         if(bien==null){
             throw new DomainException("Bien no puede ser nulo");
@@ -71,11 +80,18 @@ public class Categoria {
         return nombre;
     }
 
-    public String getId() {
+    public CodigoCategoria getId() {
         return id;
     }
 
     public EstadoCategoria getEstado() {
         return estado;
+    }
+    public Categoria(CodigoCategoria id) {
+        this.id = id;
+    }
+
+    public String getCreadoPor() {
+        return creadoPor;
     }
 }

@@ -1,15 +1,13 @@
 package com.empresa.inventario.application.service;
 
-import com.empresa.inventario.application.dto.request.BienCrearCommand;
 import com.empresa.inventario.application.dto.request.CategoriaActualizarCommand;
 import com.empresa.inventario.application.dto.request.CategoriaCrearCommand;
 import com.empresa.inventario.application.dto.response.CategoriaResponse;
 import com.empresa.inventario.application.port.out.ICategoriaRepository;
+import com.empresa.inventario.domain.exception.DomainException;
 import com.empresa.inventario.domain.model.Categoria;
-import com.empresa.inventario.infrastructure.persistence.entity.CategoriaEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,15 +22,27 @@ public class CategoriaService implements ICategoriaService {
 
     @Override
     public CategoriaResponse crearCategoria(CategoriaCrearCommand request) {
-        var result = categoriaRepository.save(Categoria.crear(request.codigo(), request.nombre()));
-        return new CategoriaResponse(result.getId(), result.getNombre(),result.getEstado());
+        var consulta = categoriaRepository.findById(request.codigo());
+
+        if(consulta.isPresent()) {
+         throw new DomainException("Categoria existente, no se puede registrar porque ya existe");
+        }
+
+        var result = categoriaRepository.save(Categoria.crear(request.codigo(), request.nombre(), request.creadoPor()));
+        return new CategoriaResponse(result.getId().value(), result.getNombre(),result.getEstado());
     }
 
     @Override
     public void actualizarCategoria(CategoriaActualizarCommand request) {
-        //deberia buscar en el repositorio, y devolver el valor
-        //var categoria = Categoria.hidratar("C-001","Ejemplo");
-        //categoria.actualizar(request.nombre());
+        var categoria = categoriaRepository
+                .findById(request.codigo())
+                .orElseThrow(() ->
+                        new DomainException("La categoría no existe")
+                );
+
+        categoria.actualizar(request.nombre());
+
+        categoriaRepository.save(categoria);
     }
 
     @Override
@@ -40,7 +50,7 @@ public class CategoriaService implements ICategoriaService {
         var result = categoriaRepository.findAll();
         return result
                 .stream()
-                .map(x->new CategoriaResponse(x.getId(),x.getNombre(),x.getEstado()))
+                .map(x->new CategoriaResponse(x.getId().value(),x.getNombre(),x.getEstado()))
                 .collect(Collectors.toList());
     }
 
